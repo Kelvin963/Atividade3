@@ -1,120 +1,51 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(){
+struct jogador {
+    char j1[30];
+    char p1;
+    int f1;
+};
 
-    char t1[31], t2[31];
-    char j1[11][31], j2[11][31];
-    char p1[11], p2[11];
+int main() {
+    struct jogador t1[11], t2[11];
+    char j1Time1[30], j1Time2[30];
 
-    double f1[11], f2[11];
-    double ftime1 = 0;
-    double ftime2 = 0;
-    int i;
+    scanf("%[^\n]", j1Time1);
+    getchar();
 
-
-
-//entradas de valores para o primeiro time
-    
-    fgets(t1, sizeof(t1), stdin);
-    t1[strcspn(t1, "\n")] = '\0';
-
-    for(i = 0; i < 11; i++){
-        
-        fgets(j1[i], sizeof(j1[i]), stdin);
-        j1[i][strcspn(j1[i], "\n")] = '\0';
-        
-        
-        scanf("%s", &p1[i]);
-//mudar forma de scan
-        
-        scanf("%lf", &f1[i]);
-
-        getchar();
-    }       
-
-//entradas de valores para o segundo time
-    
-    fgets(t2, sizeof(t2), stdin);
-    t2[strcspn(t2, "\n")] = '\0'; 
-    
-    for(i = 0; i < 11; i++){
-        
-        fgets(j2[i], sizeof(j2[i]), stdin);
-        j2[i][strcspn(j2[i], "\n")] = '\0';
-        
-        
-        scanf("%s", &p2[i]);
-
-        
-        scanf("%lf", &f2[i]);
-        
-        getchar();
-        // DENTRO DO FOR DE CADA UM COLOCAR ISSO scanf("%40[^;];%c;%d", nomeJogador2[i], &posicao, &nivelForca);
-        //SCANEAR ASSIM PARA O MARVIN LER CORRETAMENTE
-    }   
-
-    for(i = 0; i < 11; i++){
-        if(p1[i] == 'G'){
-            ftime1 += 8 * f1[i];
-
-        }else if(p1[i] == 'L'){
-            ftime1 += 10 * f1[i];
-
-        }else if(p1[i] == 'Z'){
-            ftime1 += 5 * f1[i];
-
-        }else if(p1[i] == 'V'){
-            ftime1 += 8 * f1[i];
-
-        }else if(p1[i] == 'M'){
-            ftime1 += 11 * f1[i];
-
-        }else if(p1[i] == 'A'){
-            ftime1 += 12 * f1[i];
-
-        }
-    }
-    
-    for(i = 0; i < 11; i++){
-        if(p2[i] == 'G'){
-            ftime2 += 8 * f2[i];
-
-        }else if(p2[i] == 'L'){
-            ftime2 += 10 * f2[i];
-
-        }else if(p2[i] == 'Z'){
-            ftime2 += 5 * f2[i];
-
-        }else if(p2[i] == 'V'){
-            ftime2 += 8 * f2[i];
-
-        }else if(p2[i] == 'M'){
-            ftime2 += 11 * f2[i];
-
-        }else if(p2[i] == 'A'){
-            ftime2 += 12 * f2[i];
-
-        }
+    for (int i = 0; i < 11; i++) {
+        scanf("%[^;];%c;%d", t1[i].j1, &t1[i].p1, &t1[i].f1);
+        getchar(); 
     }
 
-    printf("%s: %.2f\n", f1, ftime1);  
-    printf("%s: %.2f\n", f2, ftime2);
+    scanf(" %[^\n]", j1Time2);
+    getchar(); 
 
+    for (int i = 0; i < 11; i++) {
+        scanf("%[^;];%c;%d", t2[i].j1, &t2[i].p1, &t2[i].f1);
+        getchar();
+    }
 
+    float ft1 = 8 * t1[0].f1 + 10 * (t1[1].f1 + t1[4].f1) +
+                     5 * (t1[2].f1 + t1[3].f1) + 8 * (t1[5].f1 + t1[6].f1) +
+                     11 * (t1[7].f1 + t1[8].f1) + 12 * (t1[9].f1 + t1[10].f1);
 
+    float ft2 = 8 * t2[0].f1 + 10 * (t2[1].f1 + t2[4].f1) +
+                     5 * (t2[2].f1 + t2[3].f1) + 8 * (t2[5].f1 + t2[6].f1) +
+                     11 * (t2[7].f1 + t2[8].f1) + 12 * (t2[9].f1 + t2[10].f1);
 
+    float f1n = ft1 / 100.0;
+    float f2n = ft2 / 100.0;
 
+    printf("%s: %.2f de f1\n", j1Time1, f1n);
+    printf("%s: %.2f de f1\n", j1Time2, f2n);
 
-
-
-
-
-
-
-
-
-
+    if (ft1 > ft2) {
+        printf("%s eh mais forte\n", j1Time1);
+    } else if (ft2 > ft1) {
+        printf("%s eh mais forte\n", j1Time2);
+    }
 
     return 0;
 }
